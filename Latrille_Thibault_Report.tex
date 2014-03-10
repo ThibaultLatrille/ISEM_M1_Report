@@ -1,0 +1,189 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{cases}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage{xfrac}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage[margin=60pt]{geometry}
+
+
+\author{Latrille Thibault\\
+\small thibault.latrille@ens-lyon.fr\\[-0.8ex]}
+\title{Relatedness during an exponential growth.}  
+
+
+\begin{document}
+\maketitle
+\section{Distribution of population size during exponential growth}
+
+In this section, we seek to find the distribution of population size of an exponentially growing population, for every time point.
+ \paragraph{Notation} $ $\\
+ $\bullet \quad t \in \mathbb{R}_+$ is the time variable along the growth\\
+ $\bullet \quad N(t)$ is a random variable denoting the size of the population at time $t$\\
+ $\bullet \quad P_n(t)$ is the probability mass function of $N(t)$, that is to say $P_n(t)=P(N(t)=n)$\\
+ $\bullet \quad r$ is the initial population size\\
+ $\bullet \quad \rho$ is the infinitesimal birth rate\\
+ 
+
+ The process described here is a Markov process. We assume that each bacteria has an independent constant birth rate $\rho$ and that they never die. Biologically,  these assumption reflect the fact that we neglect competition, and also that the probability for a bacteria to divide is independent of its age. The equations describing the population size distribution are:   
+ \begin{subequations}
+  \begin{numcases}{}
+    \sum_{n \geq r} P_n(t)=1\\
+    P_{r}(0)=1 \\
+    P'_n(t)=(n-1)\rho P_{n-1}(t)-n\rho P_n(t)\text{ for } n \geq r. \label{eq:dif}
+  \end{numcases}
+ \end{subequations}
+We then multiply the differential equation \eqref{eq:dif} by $(s^1,s^2,s^3,\hdots)$ and add. We obtain a single partial differential equation and the boundary conditions:
+ \begin{subequations}
+  \begin{numcases}{}
+    		G(s,0)=s^{r} \\
+    		G(1,t)=1 \\
+    		G(0,t)=0 \\
+    		\dfrac{\partial G(s,t)}{\partial t} = \rho s(s-1) \dfrac{\partial G(s,t)}{\partial s} \text{ for } s \in [0,1], \label{eq:dif:partial}
+ \end{numcases}
+ \end{subequations}
+ where $\displaystyle G(s,t)=\sum_{i=1}^{\infty} P_i(t)s^i=\mathbb{E}[ s^{N(t)}] $ is the probability generating function of $N(t)$. \\
+The probability generating function satisfying this equation (\textit{reference needed}) is:
+
+\begin{equation}
+G(s,t)=\left( \dfrac{s e^{-\rho t}}{1-s+s e^{-\rho t}} \right)^r=\left( \dfrac{sp(t)}{1-s[1-p(t)]} \right)^r \text{ where }p(t)=e^{-\rho t}.
+\end{equation}
+
+Thus the distribution of $N(t)$ is of the negative binomial form (\textit{reference needed}), that is to say: 
+\begin{equation}
+P_n(t)=P(N(t)=n)=\binom{n-1}{r-1} p(t)^r [1-p(t)]^{n-r} \text{ for } n \geq r.
+\end{equation}
+
+ 
+ \section{Distribution of the size of one family conditional on the size of the population}
+ In this section, we deal with several exponentially growing families. We assume that families are independent of one another and that each family has the same growth rate but there initial size can differ. We then seek to find the distribution of size of one single family, conditional on the size of the total population. This conditional distribution is then used to compute some useful quantities.
+ \\
+  \paragraph{Notation} $ $\\
+ $\bullet \quad d>1$ is the number of families\\
+ $\bullet \quad r_i $ for $1 \leq i \leq d$ is the initial size of the $i$\textsuperscript{th} family\\
+ $\displaystyle \bullet \quad r_+=\sum_{i=0}^d r_i$ is the initial size of the population \\
+ $\bullet \quad N_i(t) $ is the random variable denoting the size of the $i$\textsuperscript{th} family at time $t$ \\
+ $\displaystyle \bullet \quad N_+(t)=\sum_{i=0}^d N_i(t)$ is the random variable denoting the size of the population at time $t$ \\
+ $\bullet \quad p(t)=e^{-\rho t} $ as in the previous section\\
+ 
+ Let us denote $X_i(t)=N_i(t)-r_i$, we are then interested in the number of births. $X_i$ follows a negative binomial distributions with parameters $r_i$ and $p(t)$:
+
+\begin{equation}
+X_i \sim \textrm{NB}(r_i,p(t)) \iff P(X_i(t)=x)=\binom{x+r_i-1}{x} p(t)^{r_i} [1-p(t)]^{x} \text{ for } x \geq 0.
+\end{equation}
+
+This second form of the negative binomial is used for convenience since calculus are more tractable and direct in this way.\\
+
+
+Let $X_i(t) \sim \textrm{NB}(r_i,p(t))$ for $1 \leq i \leq d$, and denote $X_+(t)=\sum_{i=0}^d X_i(t)$. The sum of independent negative binomials is a negative binomial:
+
+\begin{equation}
+ X_+(t)  \sim \textrm{NB} \left( r_+, p(t) \right). \label{sumNB}
+\end{equation}
+
+
+Let $(x,x_+) \in \mathbb{N}_+^2$ such that $0 \leq x \leq x_+$. And denote $ \displaystyle r_{-i}=\sum_{j \neq i} r_j=r_+-r_i$, then
+
+\begin{align}
+P( X_i(t)=x \vert X_+(t)=x_+ ) &=\dfrac{P\left( X_i(t)=x \cap \sum_{j \neq i} X_i(t)=y-x \right)}{P\left(X_+(t)=y\right)} \text{ by Bayes formula}\\
+ &=\dfrac{P\left(X_i(t)=x\right) P\left(\sum_{j \neq i} X_j(t)=y-x\right)}{P\left(X_+(t)=y\right)} \text{ by independence}\\
+ &=\dfrac{\displaystyle \binom{x+r_i-1}{x} p(t)^{r_i} [1-p(t)]^{x} \binom{y-x+r_{-i}-1}{y-x} p(t)^{r_{-i}} [1-p(t)]^{y-x} }{\displaystyle \binom{x+r_+ -1}{y} p(t)^{r_+ } [1-p(t)]^{y}} \text{ by \eqref{sumNB}} \\
+ &=\dfrac{\displaystyle \binom{x+r_i-1}{x} \binom{y-x+r_{-i}-1}{y-x}}{\displaystyle \binom{x+r_+ -1}{y}}.
+\end{align}
+ 
+ Thus the distribution of $X_i(t)$ conditional on $ X_+(t)=x_+$ is of the negative hypergeometric form (\textit{reference needed}) and is independent of $p(t)$.
+ 
+ First and second moments are then evaluated (\textit{reference needed}): 
+ 
+\begin{align}
+\mathbb{E} [ X_i(t) \vert X_+(t)=x_+ ] &=\dfrac{r_i x_+}{r_+ } \\
+\mathbb{E} [ X_i(t)^2 \vert X_+(t)=x_+ ] &=\dfrac{r_i x_+ (r_{-i} +x_+ (r_i+1))}{r_+ (1+r_+ )}.
+\end{align}
+
+Leading to the formula
+\begin{equation}
+ \mathbb{E} [ X_i(t)(X_i(t)-1) \vert X_+(t)=x_+ ] =\dfrac{r_i(r_i+1) x_+ ( x_+ -1 ) }{r_+ (r_+ +1 )}. \label{condexpX}
+\end{equation}
+
+We thus can compute the following expectation used to evaluate relatedness between individuals.
+\begin{align}
+\label{Rexp}
+\mathbb{E}\left[ \dfrac{X_i(t)(X_i(t)-1)}{X_+(t) (X_+(t)-1)} \right] &= \mathbb{E}\left[ \mathbb{E}\left[ \left. \dfrac{X_i(t)(X_i(t)-1)}{X_+(t) ( X_+(t)-1 ) } \right\vert X_+(t) \right] \right]\\
+&= \mathbb{E}\left[  \dfrac{\mathbb{E}\left[ X_i(t)(X_i(t)-1) \left\vert X_+(t) \right. \right] }{X_+(t) (X_+(t)-1 ) }  \right]\\
+ &=\mathbb{E}\left[\dfrac{r_i(r_i+1)}{r_+ (r_+ +1)} \dfrac{X_+(t)( X_+(t)-1)}{X_+(t)( X_+(t)-1 ) } \right] \text{ by \eqref{condexpX}}\\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}.
+\end{align}
+
+By summing over all families, we have the probability that two newborn bacteria are from the same families:
+\begin{align}
+\mathbb{E}\left[ \displaystyle \sum_{i=0}^d \dfrac{X_i(t)(X_i(t)-1)}{X_+(t) (X_+(t)-1)} \right] &= \displaystyle \sum_{i=0}^d \mathbb{E}\left[  \dfrac{X_i(t)(X_i(t)-1)}{X_+(t)( X_+(t)-1 ) } \right]\\
+&= \displaystyle \sum_{i=0}^d \dfrac{r_i(r_i+1)}{r_+ (1+r_+ )} \\
+&= \displaystyle \sum_{i=0}^d \dfrac{r_i^2}{r_+ (r_+ +1)} +\dfrac{1}{ r_+ +1}.
+\end{align}
+
+
+Using \eqref{condexpX} and the relation $N_i=X_i+r_i$ we derive the expectation for $N_i(t)$ conditional on $N_+(t)$:
+\begin{equation}
+ \mathbb{E} [ N_i(t)(N_i(t)-1) \vert N_+(t)=n_+ ] =\dfrac{r_i(r_i+1) n_+ \left( n_+ -1 \right) }{r_+ (r_+ +1)} -
+ \dfrac{2 r_{-i} n_+ }{r_+ (r_+ +1)}. \label{condexpN}
+\end{equation}
+
+In similar fashion to \eqref{Rexp}, we have:
+
+\begin{align}
+\mathbb{E}\left[ \dfrac{N_i(t)(N_i(t)-1)}{N_+(t) ( N_+(t)-1 )} \right] &= 
+ \mathbb{E}\left[ \mathbb{E}\left[ \left. \dfrac{N_i(t)(N_i(t)-1)}{N_+(t)( N_+(t)-1 ) } \right\vert N_+(t) \right] \right]\\
+ &= \mathbb{E}\left[  \dfrac{\mathbb{E}[ N_i(t)(N_i(t)-1) \vert N_+(t) ] }{N_+(t) (N_+(t)-1 ) }  \right]\\
+ &=\mathbb{E}\left[\dfrac{r_i(r_i+1)}{r_+ (r_+ +1)} \dfrac{N_+(t)( N_+(t)-1 )}{N_+(t)( N_+(t)-1) }- \dfrac{2r_{-i}}{r_+ (r_+ +1)} \dfrac{N_+(t)}{N_+(t)( N_+(t)-1 ) } \right] \text{ by \eqref{condexpN}}\\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}}{r_+ (r_+ +1 )}\mathbb{E}\left[\dfrac{1}{N_+(t)-1} \right]\\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}}{r_+ (r_+ +1 )} \sum_{x=r_+}^{\infty } \dfrac{1}{x-1} \binom{x-1}{r_+-1} p(t)^{r_+} [1-p(t)]^{x-r_+} \\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}}{r_+ (r_+ +1 )}\sum_{y=r_+-1}^{\infty} \dfrac{1}{y} \binom{y}{r_+-1} p(t)^{r_+} [1-p(t)]^{y+1-r_+} \text{ with }y=x-1\\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}}{r_+ (r_+ +1 )}\dfrac{p(t)}{r_+-1}\sum_{y=r_+-1}^{\infty}\binom{y-1}{(r_+-1)-1} p(t)^{r_+-1} [1-p(t)]^{y-(r_+-1)} \\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}}{r_+ (r_+ +1 )}\dfrac{p(t)}{r_+-1}\\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}p(t)}{r_+ (r_+^2 -1 )}.
+\end{align}
+
+By summing over all families, we have the probability that two bacteria are from the same family:
+\begin{align}
+\mathbb{E}\left[ \displaystyle \sum_{i=0}^d \dfrac{N_i(t)(N_i(t)-1)}{N_+(t)(N_+(t)-1)} \right] &= \displaystyle \sum_{i=0}^d \mathbb{E}\left[  \dfrac{N_i(t)(N_i(t)-1)}{N_+(t)( N_+(t)-1 ) } \right]\\
+&= \displaystyle \sum_{i=0}^d \left[ \dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}p(t)}{r_+ (r_+^2 -1 )} \right] \\
+&= \displaystyle  \sum_{i=0}^d \dfrac{r_i^2}{r_+ (r_+ +1)} +\dfrac{1}{ r_+ +1} -\dfrac{2(d-1)}{r_+^2 -1 }e^{-\rho t}.
+\end{align}
+
+If we assume $r_i=r$ for $0 \leq i \leq d$, the previous formula reduces to:
+\begin{align}
+\mathbb{E}\left[ \displaystyle \sum_{i=0}^d \dfrac{N_i(t)(N_i(t)-1)}{N_+(t)\left(N_+(t)-1 \right)} \right] &=
+ \sum_{i=0}^d \dfrac{r^2}{rd(rd+1)} +\dfrac{1}{ rd +1} -\dfrac{2(d-1)}{(rd)^2 -1 }e^{-\rho t}\\
+ &= \dfrac{r+1}{rd+1}  -\dfrac{2(d-1)}{(rd)^2 -1 }e^{-\rho t}.
+\end{align}
+
+Which equal $0$ at $t=0$ if $r=1$.
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
