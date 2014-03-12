@@ -96,10 +96,10 @@ Let $X_i(t) \sim \textrm{NB}(r_i,p(t))$ for $1 \leq i \leq d$, and denote $X_+(t
 Let $(x,x_+) \in \mathbb{N}_+^2$ such that $0 \leq x \leq x_+$. And denote $ \displaystyle r_{-i}=\sum_{j \neq i} r_j=r_+-r_i$, then
 
 \begin{align}
-P( X_i(t)=x \vert X_+(t)=x_+ ) &=\dfrac{P\left( X_i(t)=x \cap \sum_{j \neq i} X_i(t)=y-x \right)}{P\left(X_+(t)=y\right)} \text{ by Bayes formula}\\
- &=\dfrac{P\left(X_i(t)=x\right) P\left(\sum_{j \neq i} X_j(t)=y-x\right)}{P\left(X_+(t)=y\right)} \text{ by independence}\\
- &=\dfrac{\displaystyle \binom{x+r_i-1}{x} p(t)^{r_i} [1-p(t)]^{x} \binom{y-x+r_{-i}-1}{y-x} p(t)^{r_{-i}} [1-p(t)]^{y-x} }{\displaystyle \binom{x+r_+ -1}{y} p(t)^{r_+ } [1-p(t)]^{y}} \text{ by \eqref{sumNB}} \\
- &=\dfrac{\displaystyle \binom{x+r_i-1}{x} \binom{y-x+r_{-i}-1}{y-x}}{\displaystyle \binom{x+r_+ -1}{y}}.
+P( X_i(t)=x \vert X_+(t)=x_+ ) &=\dfrac{P\left( X_i(t)=x \cap \sum_{j \neq i} X_i(t)=x_+-x \right)}{P\left(X_+(t)=x_+\right)} \text{ by Bayes formula}\\
+ &=\dfrac{P\left(X_i(t)=x\right) P\left(\sum_{j \neq i} X_j(t)=x_+-x\right)}{P\left(X_+(t)=x_+\right)} \text{ by independence}\\
+ &=\dfrac{\displaystyle \binom{x+r_i-1}{x} p(t)^{r_i} [1-p(t)]^{x} \binom{x_+-x+r_{-i}-1}{x_+-x} p(t)^{r_{-i}} [1-p(t)]^{x_+-x} }{\displaystyle \binom{x_++r_+ -1}{x_+} p(t)^{r_+ } [1-p(t)]^{x_+}} \text{ by \eqref{sumNB}} \\
+ &=\dfrac{\displaystyle \binom{x+r_i-1}{x} \binom{x_+-x+r_{-i}-1}{x_+-x}}{\displaystyle \binom{x_+ +r_+ -1}{x_+}}.
 \end{align}
  
  Thus the distribution of $X_i(t)$ conditional on $ X_+(t)=x_+$ is of the negative hypergeometric form (\textit{reference needed}) and is independent of $p(t)$.
@@ -111,61 +111,55 @@ P( X_i(t)=x \vert X_+(t)=x_+ ) &=\dfrac{P\left( X_i(t)=x \cap \sum_{j \neq i} X_
 \mathbb{E} [ X_i(t)^2 \vert X_+(t)=x_+ ] &=\dfrac{r_i x_+ (r_{-i} +x_+ (r_i+1))}{r_+ (1+r_+ )}.
 \end{align}
 
-Leading to the formula
+Leading to expectation for $X_i(t)(X_i(t)-1)$ conditional on $X_+(t)$:
 \begin{equation}
  \mathbb{E} [ X_i(t)(X_i(t)-1) \vert X_+(t)=x_+ ] =\dfrac{r_i(r_i+1) x_+ ( x_+ -1 ) }{r_+ (r_+ +1 )}. \label{condexpX}
 \end{equation}
 
-We thus can compute the following expectation used to evaluate relatedness between individuals.
+Using \eqref{condexpX} and the relation $N_i(t)=X_i(t)+r_i$ we derive the expectation for $N_i(t)(N_i(t)-1)$ conditional on $N_+(t)$:
 \begin{align}
-\label{Rexp}
-\mathbb{E}\left[ \dfrac{X_i(t)(X_i(t)-1)}{X_+(t) (X_+(t)-1)} \right] &= \mathbb{E}\left[ \mathbb{E}\left[ \left. \dfrac{X_i(t)(X_i(t)-1)}{X_+(t) ( X_+(t)-1 ) } \right\vert X_+(t) \right] \right]\\
-&= \mathbb{E}\left[  \dfrac{\mathbb{E}\left[ X_i(t)(X_i(t)-1) \left\vert X_+(t) \right. \right] }{X_+(t) (X_+(t)-1 ) }  \right]\\
- &=\mathbb{E}\left[\dfrac{r_i(r_i+1)}{r_+ (r_+ +1)} \dfrac{X_+(t)( X_+(t)-1)}{X_+(t)( X_+(t)-1 ) } \right] \text{ by \eqref{condexpX}}\\
- &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}.
+ \mathbb{E} [ N_i(t)(N_i(t)-1) \vert N_+(t)=n_+ ] &= \mathbb{E} [ ( X_i(t)+r_i)(X_i(t)+r_i -1) \vert X_+(t)+ r_+ = n_+ ] \\
+ &= \mathbb{E} [r_i(r_i-1) + 2r_i X_i(t) + X_i(t)(X_i(t)-1) \vert X_+(t)=n_+ - r_+ ]\\
+ &= r_i(r_i-1) + 2 r_i \mathbb{E} [ X_i(t) \vert X_+(t)=n_+ - r_+ ]\\
+ & \qquad + \mathbb{E} [X_i(t)(X_i(t)-1) \vert X_+(t)=n_+ - r_+ ]\\
+  &= r_i(r_i-1) + 2 r_i \dfrac{r_i (n_+ - r_+)}{r_+ } + \dfrac{r_i(r_i+1) (n_+ - r_+) ( n_+ - r_+ -1 ) }{r_+ (r_+ +1 )}\\
+ &=\dfrac{r_i(r_i+1) n_+ ( n_+ -1 ) }{r_+ (r_+ +1)} -\dfrac{2 r_{i} (r_+ - r_i) n_+ }{r_+ (r_+ +1)}. \label{condexpN}
+\end{align}
+ 
+Leading to the expectation of picking two bacteria from family $i$, conditional on the population size: 
+\begin{align}
+  \mathbb{E}\left[ \left. \dfrac{N_i(t)(N_i(t)-1)}{N_+(t)( N_+(t)-1 ) } \right\vert N_+(t)=n_+ \right] &= 
+ \dfrac{\mathbb{E}[ N_i(t)(N_i(t)-1) \vert N_+(t)=n_+] }{n_+ (n_+ -1 ) }  \\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1)} \dfrac{n_+ (n_+ -1 ) }{ n_+ (n_+ -1 ) }- \dfrac{2 r_i (r_+ -r_{i})}{r_+ (r_+ +1)} \dfrac{n_+}{ n_+ (n_+ -1 ) } \text{ by \eqref{condexpN}}\\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1)}- \dfrac{2 r_i (r_+ -r_{i})}{r_+ (r_+ +1)} \dfrac{1}{ n_+ -1  }. \label{RelatednesscondexpN}
 \end{align}
 
-By summing over all families, we have the probability that two newborn bacteria are from the same families:
-\begin{align}
-\mathbb{E}\left[ \displaystyle \sum_{i=0}^d \dfrac{X_i(t)(X_i(t)-1)}{X_+(t) (X_+(t)-1)} \right] &= \displaystyle \sum_{i=0}^d \mathbb{E}\left[  \dfrac{X_i(t)(X_i(t)-1)}{X_+(t)( X_+(t)-1 ) } \right]\\
-&= \displaystyle \sum_{i=0}^d \dfrac{r_i(r_i+1)}{r_+ (1+r_+ )} \\
-&= \displaystyle \sum_{i=0}^d \dfrac{r_i^2}{r_+ (r_+ +1)} +\dfrac{1}{ r_+ +1}.
-\end{align}
-
-
-Using \eqref{condexpX} and the relation $N_i=X_i+r_i$ we derive the expectation for $N_i(t)$ conditional on $N_+(t)$:
-\begin{equation}
- \mathbb{E} [ N_i(t)(N_i(t)-1) \vert N_+(t)=n_+ ] =\dfrac{r_i(r_i+1) n_+ \left( n_+ -1 \right) }{r_+ (r_+ +1)} -
- \dfrac{2 r_{-i} n_+ }{r_+ (r_+ +1)}. \label{condexpN}
-\end{equation}
-
-In similar fashion to \eqref{Rexp}, we have:
+By taking expectation of \eqref{RelatednesscondexpN}, one get expectation of picking two bacteria from family $i$:
 
 \begin{align}
 \mathbb{E}\left[ \dfrac{N_i(t)(N_i(t)-1)}{N_+(t) ( N_+(t)-1 )} \right] &= 
  \mathbb{E}\left[ \mathbb{E}\left[ \left. \dfrac{N_i(t)(N_i(t)-1)}{N_+(t)( N_+(t)-1 ) } \right\vert N_+(t) \right] \right]\\
- &= \mathbb{E}\left[  \dfrac{\mathbb{E}[ N_i(t)(N_i(t)-1) \vert N_+(t) ] }{N_+(t) (N_+(t)-1 ) }  \right]\\
- &=\mathbb{E}\left[\dfrac{r_i(r_i+1)}{r_+ (r_+ +1)} \dfrac{N_+(t)( N_+(t)-1 )}{N_+(t)( N_+(t)-1) }- \dfrac{2r_{-i}}{r_+ (r_+ +1)} \dfrac{N_+(t)}{N_+(t)( N_+(t)-1 ) } \right] \text{ by \eqref{condexpN}}\\
- &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}}{r_+ (r_+ +1 )}\mathbb{E}\left[\dfrac{1}{N_+(t)-1} \right]\\
- &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}}{r_+ (r_+ +1 )} \sum_{x=r_+}^{\infty } \dfrac{1}{x-1} \binom{x-1}{r_+-1} p(t)^{r_+} [1-p(t)]^{x-r_+} \\
- &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}}{r_+ (r_+ +1 )}\sum_{y=r_+-1}^{\infty} \dfrac{1}{y} \binom{y}{r_+-1} p(t)^{r_+} [1-p(t)]^{y+1-r_+} \text{ with }y=x-1\\
- &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}}{r_+ (r_+ +1 )}\dfrac{p(t)}{r_+-1}\sum_{y=r_+-1}^{\infty}\binom{y-1}{(r_+-1)-1} p(t)^{r_+-1} [1-p(t)]^{y-(r_+-1)} \\
- &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}}{r_+ (r_+ +1 )}\dfrac{p(t)}{r_+-1}\\
- &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}p(t)}{r_+ (r_+^2 -1 )}.
+ &=\mathbb{E}\left[\dfrac{r_i(r_i+1)}{r_+ (r_+ +1)}- \dfrac{2 r_i (r_+ -r_{i})}{r_+ (r_+ +1)} \dfrac{1}{N_+(t)-1) } \right] \text{ by \eqref{condexpN}}\\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2 r_i (r_+ -r_{i})}{r_+ (r_+ +1 )}\mathbb{E}\left[\dfrac{1}{N_+(t)-1} \right]\\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2 r_i (r_+ -r_{i})}{r_+ (r_+ +1 )} \sum_{x=r_+}^{\infty } \dfrac{1}{x-1} \binom{x-1}{r_+-1} p(t)^{r_+} [1-p(t)]^{x-r_+} \\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2 r_i (r_+ -r_{i})}{r_+ (r_+ +1 )}\sum_{y=r_+-1}^{\infty} \dfrac{1}{y} \binom{y}{r_+-1} p(t)^{r_+} [1-p(t)]^{y+1-r_+} \text{ with }y=x-1\\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2 r_i (r_+ -r_{i})}{r_+ (r_+ +1 )}\dfrac{p(t)}{r_+-1}\sum_{y=r_+-1}^{\infty}\binom{y-1}{(r_+-1)-1} p(t)^{r_+-1} [1-p(t)]^{y-(r_+-1)} \\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2 r_i (r_+ -r_{i})}{r_+ (r_+ +1 )}\dfrac{p(t)}{r_+-1}\\
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2 r_i (r_+ -r_{i})p(t)}{r_+ (r_+^2 -1 )}. \label{Relatedness}
 \end{align}
 
-By summing over all families, we have the probability that two bacteria are from the same family:
+By summing \eqref{Relatedness} over all families, we have the probability that two bacteria are from the same family:
 \begin{align}
 \mathbb{E}\left[ \displaystyle \sum_{i=0}^d \dfrac{N_i(t)(N_i(t)-1)}{N_+(t)(N_+(t)-1)} \right] &= \displaystyle \sum_{i=0}^d \mathbb{E}\left[  \dfrac{N_i(t)(N_i(t)-1)}{N_+(t)( N_+(t)-1 ) } \right]\\
-&= \displaystyle \sum_{i=0}^d \left[ \dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2r_{-i}p(t)}{r_+ (r_+^2 -1 )} \right] \\
-&= \displaystyle  \sum_{i=0}^d \dfrac{r_i^2}{r_+ (r_+ +1)} +\dfrac{1}{ r_+ +1} -\dfrac{2(d-1)}{r_+^2 -1 }e^{-\rho t}.
+&= \displaystyle \sum_{i=0}^d \left[ \dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2 r_i (r_+ -r_{i})p(t)}{r_+ (r_+^2 -1 )} \right] \\
+&=    \dfrac{ r_+ + \sum_{i=0}^d r_i^2}{r_+ (r_+ +1)}  -2 e^{-\rho t} \dfrac{ r_+^2-\sum_{i=0}^d r_i^2}{r_+ (r_+^2 -1) }.
 \end{align}
 
 If we assume $r_i=r$ for $0 \leq i \leq d$, the previous formula reduces to:
 \begin{align}
 \mathbb{E}\left[ \displaystyle \sum_{i=0}^d \dfrac{N_i(t)(N_i(t)-1)}{N_+(t)\left(N_+(t)-1 \right)} \right] &=
- \sum_{i=0}^d \dfrac{r^2}{rd(rd+1)} +\dfrac{1}{ rd +1} -\dfrac{2(d-1)}{(rd)^2 -1 }e^{-\rho t}\\
- &= \dfrac{r+1}{rd+1}  -\dfrac{2(d-1)}{(rd)^2 -1 }e^{-\rho t}.
+ \dfrac{ rd + r^2 d}{rd (rd +1)}  -2 e^{-\rho t} \dfrac{ (rd)^2-r^2d}{rd [(rd)^2 -1] }\\
+ &= \dfrac{r+1}{rd+1}  -2e^{-\rho t} \dfrac{r(d-1)}{(rd)^2 -1 }.
 \end{align}
 
 Which equal $0$ at $t=0$ if $r=1$.
