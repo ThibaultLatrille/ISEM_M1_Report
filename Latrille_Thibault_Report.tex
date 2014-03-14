@@ -164,6 +164,91 @@ If we assume $r_i=r$ for $0 \leq i \leq d$, the previous formula reduces to:
 
 Which equal $0$ at $t=0$ if $r=1$.
 
+
+\section{biological model}
+ \paragraph{Notation} $ $\\
+ $\bullet \quad t \in [0, t_{max}]$, the time variable along the growth\\
+ $\bullet \quad p=p(t)=P$(coalescence of two lineages | the two lineages were in the same nematode during infection)\\
+ $\bullet \quad Q_0^J$ the identity of two bacteria in the same nematode during the free state\\
+ $\bullet \quad Q_1^J$ the identity of two bacteria in a different nematode during the free state\\
+ $\bullet \quad Q_0(t)$ the identity of two bacteria in the same insect during growth\\
+ $\bullet \quad Q_1(t)$ the identity of two bacteria in a different insect during growth\\
+ $\bullet \quad I$ the number of insects\\
+ $\bullet \quad V$ the number of nematodes\\
+ \[
+  \begin{cases}
+    		Q_1(t) &= Q_1^J\\
+    		Q_0(t) &= p {\mathbb E}_{Z_1, \hdots, Z_V } \left[ \dfrac{\sum_{i=1}^V Z_i(Z_i-1)}{\sum_{i=1}^V Z_i \left( \sum_{i=1}^V Z_i-1 \right)} \right]\\
+    		& \qquad + Q_0^J(1-p) {\mathbb E}_{Z_1, \hdots, Z_V } \left[ \dfrac{\sum_{i=1}^V Z_i(Z_i-1)}{\sum_{i=1}^V Z_i \left( \sum_{i=1}^V Z_i-1 \right)} \right]\\
+    		& \qquad + Q_1^J {\mathbb E}_{Z_1, \hdots, Z_V } \left[ \dfrac{\sum_{i=1}^V \sum_{j=1}^{i-1} 2 Z_i Z_j}{\sum_{i=1}^V Z_i \left( \sum_{i=1}^V Z_i-1 \right)} \right]\\
+    		Q_0^{J'} &= Q_0(t_{max}) \\
+    		Q_1^{J'} &= \dfrac{Q_0(t_{max})}{S} +\dfrac{(S-1) Q_1(t_{max})}{S}
+  \end{cases}
+  \]
+  $$\iff$$
+  \begin{subequations}
+  \begin{numcases}{}
+    		Q_1(t) = Q_1^J\\
+    		Q_0(t)= p \phi (t) + Q_0^J (1-p) \phi (t) + Q_1^J (1- \phi (t)) \\
+    		Q_0^{J'} = Q_0(t_{max}) \\
+    		Q_1^{J'} = \dfrac{Q_0(t_{max})}{S} +\dfrac{(S-1) Q_1(t_{max})}{S}
+  \end{numcases}
+ \end{subequations}
+
+\newpage
+\section{Logistic growth of bacteria}
+ \paragraph{Notation} $ $\\
+ $\bullet \quad t \in \mathbb{R}_+$, the time variable along the growth\\
+ $\bullet \quad P_n(t)$, the probability that the population at time $t$ is of size $n$.\\
+ $\bullet \quad N(t)$, the random variable with law $P(N(t)=n)=P_n(t)$\\
+ $\bullet \quad n_0$ the initial population size\\
+ $\bullet \quad \rho$ the infinitesimal birth rate\\
+ $\bullet \quad c$ the infinitesimal competition rate\\
+ 
+ 
+ The process is such that each bacteria has an independent birth rate $\rho$, and the death is only due to competition such that each bacteria dies out a rate $n\rho$, where $n$ is the number of other bacteria. Thus the forward equation is:   
+ \begin{subequations}
+  \begin{numcases}{}
+    \sum_{i \geq 1} P_n(t)=1\\
+    P_{i_0}(0)=1 \\
+    P'_i(t)=(i-1)\rho P_{i-1}(t)+ci(i+1)P_{i+1}(t)-i(\rho+c(i-1))P_i(t)\text{ for } i\geq 1 \label{eq:dif}
+  \end{numcases}
+ \end{subequations}
+Multiply the differential equation \eqref{eq:dif} by $(s^1,s^2,s^3,\hdots)$ and add. We obtain a single partial differential equation:
+ \begin{subequations}
+  \begin{numcases}{}
+    		G(s,0)=s^{n_0} \\
+    		G(1,t)=1 \\
+    		G(0,t)=0 \\
+    		\dfrac{\partial G(s,t)}{\partial t} = \rho s(s-1) \dfrac{\partial G(s,t)}{\partial s} + c s(1-s) \dfrac{\partial^2 G(s,t)}{\partial s^2} \text{ for } s \in [0,1] \label{eq:dif:partial}
+ \end{numcases}
+ \end{subequations}
+ with $\displaystyle G(s,t)=\sum_{i=1}^{\infty} P_i(t)s^i=\mathbb{E}[ s^{N(t)}] $ the probability generating function of $N(t)$. \\
+At equilibrium, with $\lambda = \sfrac{\rho}{c} $, the probability generating function satisfying this equation is :
+  $$ \displaystyle  G(s,\infty)= \sum_{i\geq 1} \dfrac{e^{-\lambda}}{1-e^{-\lambda}} \dfrac{ \lambda^i}{i!} s^i = \dfrac{e^{-\lambda}}{1-e^{-\lambda}} \left( e^{s \lambda} -1 \right) \text{ for } s \in [0,1] $$ 
+  And the associated limiting distribution is that of a Poisson variable, conditioned on being positive: 
+ $$ \displaystyle P_i(\infty)=\dfrac{e^{-\lambda}}{1-e^{-\lambda}} \dfrac{ \lambda^i}{i!} \text{ for } i\geq 1$$ 
+ 
+ 
+ Denote $G(s,t)=e^{s \sfrac{\rho}{2c}}K(s,t)$ and the \eqref{eq:dif:partial} become :
+ \begin{subequations}
+  \begin{numcases}{}
+    		K(0,t)=0 \\
+    		\dfrac{\partial K(s,t)}{\partial t} = \dfrac{\rho^2}{2c} s(s-1) K(s,t) + c s(1-s) \dfrac{\partial^2 K(s,t)}{\partial s^2} \text{ for } s \in [0,1] 
+ \end{numcases}
+ \end{subequations}
+ 
+ 
+ Multiply the differential equation \eqref{eq:dif} by $(e^{-\theta},e^{-2\theta},e^{-3\theta},\hdots)$ and add. We obtain a single partial differential equation:
+  \begin{subequations}
+  \begin{numcases}{}
+    		H(0,t)=1 \\
+    		H(\theta ,0)=e^{-\theta n_0 } \\
+    		\dfrac{\partial H(\theta,t)}{\partial t} = \rho (1-e^{-\theta}) \dfrac{\partial H(\theta,t)}{\partial \theta} + c (e^{\theta}-1) \left( \dfrac{\partial H(\theta,t)}{\partial \theta}+\dfrac{\partial^2 H(\theta,t)}{\partial \theta ^2} \right) \text{ for } \theta \in \mathbb{R_+}
+ \end{numcases}
+ \end{subequations}
+ with $\displaystyle H(s,t)=\sum_{i=1}^{\infty} P_i(t)e^{-i \theta }=\mathbb{E}[ e^{-\theta N(t)}]$ the moment generating function of $N(t)$. \\
+
 \end{document}
 
 
