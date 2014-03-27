@@ -315,37 +315,78 @@ At equilibrium, with $\rho = \sfrac{\lambda}{c} $, the probability generating fu
  \end{subequations}
  with $\displaystyle H(s,t)=\sum_{i=1}^{\infty} P_i(t)e^{-i \theta }=\mathbb{E}[ e^{-\theta N(t)}]$ the moment generating function of $N(t)$. \\
 
-\section{biological model}
+\section{Biological model and Relatedness.}
  \paragraph{Notation} $ $\\
  $\bullet \quad t \in [0, t_{max}]$, the time variable along the growth\\
- $\bullet \quad q=q(t)=P$(coalescence of two lineages | the two lineages were in the same nematode during infection)\\
- $\bullet \quad Q_0^J$ the identity of two bacteria in the same nematode during the free state\\
- $\bullet \quad Q_1^J$ the identity of two bacteria in a different nematode during the free state\\
- $\bullet \quad Q_0(t)$ the identity of two bacteria in the same insect during growth\\
- $\bullet \quad Q_1(t)$ the identity of two bacteria in a different insect during growth\\
- $\bullet \quad I$ the number of insects\\
- $\bullet \quad S$ the number of nematodes\\
+ $\bullet \quad Q_0^J$ the probability of identity of two bacteria in the same nematode during the free state\\
+ $\bullet \quad Q_1^J$ the probability of identity of two bacteria in a different nematode during the free state\\
+ $\bullet \quad Q_0(t)$ the probability of identity of two bacteria in the same insect during growth\\
+ $\bullet \quad Q_1(t)$ the probability of identity of two bacteria in a different insect during growth\\
+ $\bullet \quad n_{I}$ the number of insects\\
+ $\bullet \quad V$ the number of nematodes infecting the insect\\
  
- \[
-  \begin{cases}
-    		Q_1(t) &= Q_1^J\\
-    		Q_0(t) &= p {\mathbb E}_{Z_1, \hdots, Z_V } \left[ \dfrac{\sum_{i=1}^V Z_i(Z_i-1)}{\sum_{i=1}^V Z_i \left( \sum_{i=1}^V Z_i-1 \right)} \right]\\
-    		& \qquad + Q_0^J(1-p) {\mathbb E}_{Z_1, \hdots, Z_V } \left[ \dfrac{\sum_{i=1}^V Z_i(Z_i-1)}{\sum_{i=1}^V Z_i \left( \sum_{i=1}^V Z_i-1 \right)} \right]\\
-    		& \qquad + Q_1^J {\mathbb E}_{Z_1, \hdots, Z_V } \left[ \dfrac{\sum_{i=1}^V \sum_{j=1}^{i-1} 2 Z_i Z_j}{\sum_{i=1}^V Z_i \left( \sum_{i=1}^V Z_i-1 \right)} \right]\\
-    		Q_0^{J'} &= Q_0(t_{max}) \\
-    		Q_1^{J'} &= \dfrac{Q_0(t_{max})}{S} +\dfrac{(S-1) Q_1(t_{max})}{S}
-  \end{cases}
-  \]
-  
-  $$\iff$$
   \begin{subequations}
   \begin{numcases}{}
-    		Q_1(t) = Q_1^J\\
-    		Q_0(t)= q \phi (t) + Q_0^J (1-q) \phi (t) + Q_1^J (1- \phi (t)) \\
-    		Q_0^{J'} = Q_0(t_{max}) \\
-    		Q_1^{J'} = \dfrac{Q_0(t_{max})}{S} +\dfrac{(S-1) Q_1(t_{max})}{S}
+      		Q_0^{J} = 1 \\
+    		Q_1^{J} = \dfrac{Q_0(t_{max})}{n_{I}} +\dfrac{n_{I}-1}{n_{I}} Q_1(t_{max})\\
+    		Q_1'(t) = Q_1^J\\
+    		Q_0'(t) = {\mathbb E}_{N_1(t), \hdots, N_V(t) } \left[ \displaystyle  \sum_{i=1}^V \dfrac{ N_i(t)(N_i(t)-1)}{ N_+(t)( N_+(t) -1 )} \right] + Q_1^J {\mathbb E}_{N_1(t), \hdots, N_V(t) } \left[ \displaystyle  \sum_{i=1}^V \sum_{j=1}^{i-1} \dfrac{  2 N_i(t) N_j(t)}{ N_+ (t)( N_+ (t)-1 )} \right].
   \end{numcases}
  \end{subequations}
+ 
+ Hence, in a more compact way: 
+ 
+  \begin{subequations}
+  \begin{numcases}{}
+      		Q_0'(t_{max}) = \psi + \left( \dfrac{Q_0(t_{max})}{n_{I}}+\dfrac{n_{I}-1}{n_{I}} Q_1(t_{max}) \right) (1 -\psi) \\
+    		    		Q_1'(t_{max}) = \dfrac{Q_0(t_{max})}{n_{I}}+\dfrac{n_{I}-1}{n_{I}} Q_1(t_{max}),
+  \end{numcases}
+ \end{subequations}
+ 
+ where $\psi \equiv \psi(t_{max})={\mathbb E}_{N_1(t_{max}), \hdots, N_V(t_{max}) } \left[ \displaystyle  \sum_{i=1}^V \dfrac{ N_i(t_{max})(N_i(t_{max})-1)}{ N_+(t_{max})( N_+(t_{max}) -1 )} \right]$.
+  
+\subsection{Derivation of relatedness for infinite number of insects.}
+Under the assumption of an infinite number of demes ($n_{I} \rightarrow \infty$), both $Q_1^J$ and $Q_1(t)$ equal $0$. Thus the recursion equation at equilibrium for $Q_0(t_{max})$ is solve unambiguously and give the relatedness $R$:
+
+\begin{equation}
+R=Q_0(t_{max}) = \psi.
+\end{equation}
+
+
+\subsection{Derivation of relatedness for low mutation rate.}
+Taking mutation rate $u$ into account, the recursion equations become: 
+  \begin{subequations}
+  \begin{numcases}{}
+      		Q_0'(t_{max}) = (1-u)^2 \left[ \psi + \left( \dfrac{Q_0(t_{max})}{n_{I}}+\dfrac{n_{i}-1}{n_{I}} Q_1(t_{max}) \right) (1 -\psi) \right] \\
+    		    		Q_1'(t_{max}) = (1-u)^2 \left[ \dfrac{Q_0(t_{max})}{n_{I}}+\dfrac{n_{i}-1}{n_{I}} Q_1(t_{max}) \right].
+  \end{numcases}
+ \end{subequations}
+ 
+ At equilibrium, $Q_0'(t_{max})=Q_0(t_{max})$ and $Q_1'(t_{max})=Q_1(t_{max})$ and the recursion equations are:
+ \begin{subequations}
+  \begin{numcases}{}
+      		Q_0(t_{max}) = (1-u)^2 \left[ \psi + \left( \dfrac{Q_0(t_{max})}{n_{I}}+\dfrac{n_{i}-1}{n_{I}} Q_1(t_{max}) \right) (1 -\psi) \right] \\
+    		    		Q_1(t_{max}) = (1-u)^2 \left[ \dfrac{Q_0(t_{max})}{n_{I}}+\dfrac{n_{i}-1}{n_{I}} Q_1(t_{max}) \right].
+  \end{numcases}
+ \end{subequations}
+ 
+ Leading to the unique solution:
+ 
+ \begin{align}
+ Q_0(t_{max}) &= \dfrac{ (1-u)^2 [u (2 - u)(n_{I}-1) +1 ]\psi }{ u (2-u )(n_{I} - \psi )+\psi }\\
+ Q_1(t_{max}) &= \dfrac{(1- u )^4 \psi}{u (2-u) (n_{I} - \psi ) +\psi}.
+ \end{align}
+
+ And the relatedness is: 
+ 
+ \begin{equation}
+ R(u)=\dfrac{Q_0(t_{max})-Q_1(t_{max})}{1-Q_1(t_{max})}=\dfrac{(1-u)^2 n_{I} \psi}{n_{I} +(1-u)^2 \psi}.
+ \end{equation}
+ 
+And thus by taking the limit for low mutation rate ($u \rightarrow 0$), the relatedness becomes:
+ \begin{equation}
+ R=\lim_{u \to 0} R(u)=\dfrac{n_{I} \psi}{n_{I} + \psi}=\dfrac{\psi}{1+ \dfrac{\psi}{n_{I}}}.
+ \end{equation}
  
  
 \end{document}
