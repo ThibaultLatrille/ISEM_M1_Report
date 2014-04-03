@@ -28,7 +28,7 @@
 \begin{document}
 \maketitle
 
-Relatedness is a key component of inclusive fitness, it is a measure of how closely two individuals are related. The relatedness is highly dependent on the genealogy of the population and of recent coalescent, thus population dynamic drive the evolution of relatedness. We here derive analytic formula of relatedness under several models of population dynamic. 
+Relatedness is a key component of inclusive fitness, it is a measure of how closely two individuals are related. The relatedness is highly dependent on the genealogy of the population and of recent coalescent, thus population dynamic is closely related to relatedness. We here derive analytic formula of relatedness under several models of population dynamic. 
 \section{Distribution of population size during exponential growth.}
 
 In this section, we seek to find the distribution of population size of an exponentially growing population of bacteria, for every time point.
@@ -45,16 +45,16 @@ In this section, we seek to find the distribution of population size of an expon
   \begin{numcases}{}
     \sum_{n \geq r} P_n(t)=1\\
     P_{r}(0)=1 \\
-    P'_n(t)=(n-1)\lambda P_{n-1}(t)-n\lambda P_n(t)\text{ for } n \geq r. \label{eq:dif}
+    P'_n(t)=(n-1)\lambda P_{n-1}(t)-n\lambda P_n(t)\text{ for } n \geq r. \label{eq:dif:exponential}
   \end{numcases}
  \end{subequations}
-We then multiply the differential equation \eqref{eq:dif} by $(s^1,s^2,s^3,\hdots)$ and add. We obtain a single partial differential equation and the boundary conditions:
+We then multiply the differential equation \eqref{eq:dif:exponential} by $(s^1,s^2,s^3,\hdots)$ and add. We obtain a single partial differential equation and the boundary conditions:
  \begin{subequations}
   \begin{numcases}{}
     		G(s,0)=s^{r} \\
     		G(1,t)=1 \\
     		G(0,t)=0 \\
-    		\dfrac{\partial G_{N(t)}(s)}{\partial t} = \lambda s(s-1) \dfrac{\partial G_{N(t)}(s)}{\partial s} \text{ for } s \in [0,1], \label{eq:dif:partial}
+    		\dfrac{\partial G_{N(t)}(s)}{\partial t} = \lambda s(s-1) \dfrac{\partial G_{N(t)}(s)}{\partial s} \text{ for } s \in [0,1], \label{eq:dif:exponential:partial}
  \end{numcases}
  \end{subequations}
  where $\displaystyle G_{N(t)}(s)=\sum_{i=1}^{\infty} P_i(t)s^i=\mathbb{E}[ s^{N(t)}] $ is the probability generating function of $N(t)$. \\
@@ -83,7 +83,7 @@ P_n(t)=P(N(t)=n)=\binom{n-1}{r-1} p(t)^r [1-p(t)]^{n-r} \text{ for } n \geq r.
  
  \subsection{First method, using distributions.}
   To evaluate the PI, we first need to compute the distribution of size of one single family, conditional on the size of the total population. This conditional distribution is then used to evaluate the PI.
- Let us denote $X_i(t)=N_i(t)-r_i$, then the number of births. $X_i$ has support on $\mathbb{N}$ and follows a negative binomial distributions with parameters $r_i$ and $p(t)$:
+ Let us denote $X_i(t)=N_i(t)-r_i$, the number of births. $X_i$ has support on $\mathbb{N}$ and follows a negative binomial distributions with parameters $r_i$ and $p(t)$:
 
 \begin{equation}
 X_i \sim \textrm{NB}(r_i,p(t)) \iff P(X_i(t)=x)=\binom{x+r_i-1}{x} p(t)^{r_i} [1-p(t)]^{x} \text{ for } x \geq 0.
@@ -162,15 +162,15 @@ Thus the probability that two bacteria are from family $i$ is:
 \begin{align}
 \mathbb{E}\left[ \dfrac{N_i(t)(N_i(t)-1)}{N_+(t) ( N_+(t)-1 )} \right] &= \mathbb{E}\left[\dfrac{1}{N_+(t)-1} \right]\\
  &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2 r_i (r_+ -r_{i})}{r_+ (r_+ +1 )}\dfrac{p(t)}{r_+-1}\\
- &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2 r_i (r_+ -r_{i})p(t)}{r_+ (r_+^2 -1 )}. \label{Relatedness}
+ &=\dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2 r_i (r_+ -r_{i})p(t)}{r_+ (r_+^2 -1 )}. \label{PI:family}
 \end{align}
 
 
-By summing \eqref{Relatedness} over all families, we evaluate the overall probability that two bacteria are from the same family:
+By summing \eqref{PI:family} over all families, we evaluate the overall probability that two bacteria are from the same family:
 \begin{align}
 \mathbb{E}\left[ \displaystyle \sum_{i=0}^d \dfrac{N_i(t)(N_i(t)-1)}{N_+(t)(N_+(t)-1)} \right] &= \displaystyle \sum_{i=0}^d \mathbb{E}\left[  \dfrac{N_i(t)(N_i(t)-1)}{N_+(t)( N_+(t)-1 ) } \right]\\
 &= \displaystyle \sum_{i=0}^d \left[ \dfrac{r_i(r_i+1)}{r_+ (r_+ +1 )}-\dfrac{2 r_i (r_+ -r_{i})p(t)}{r_+ (r_+^2 -1 )} \right] \\
-&=    \dfrac{ r_+ + \sum_{i=0}^d r_i^2}{r_+ (r_+ +1)}  -2 e^{-\lambda t} \dfrac{ r_+^2-\sum_{i=0}^d r_i^2}{r_+ (r_+^2 -1) }.
+&=    \dfrac{ r_+ + \sum_{i=0}^d r_i^2}{r_+ (r_+ +1)}  -2 e^{-\lambda t} \dfrac{ r_+^2-\sum_{i=0}^d r_i^2}{r_+ (r_+^2 -1) }. \label{PI}
 \end{align}
 
 If we assume $r_i=r$ for $0 \leq i \leq d$, the previous formula reduces to:
@@ -237,16 +237,16 @@ In this section we extend the pure birth process to a birth-death process, addin
   \begin{numcases}{}
     \sum_{i \geq 1} P_n(t)=1\\
     P_{r}(0)=1 \\
-    P'_i(t)=\lambda (i-1) P_{i-1}(t)+\mu (i+1)P_{i+1}(t)-i(\lambda+\mu)P_i(t)\text{ for } i\geq 1 \label{eq:dif}
+    P'_i(t)=\lambda (i-1) P_{i-1}(t)+\mu (i+1)P_{i+1}(t)-i(\lambda+\mu)P_i(t)\text{ for } i\geq 1 \label{eq:dif:BD}
   \end{numcases}
  \end{subequations}
-Multiply the differential equation \eqref{eq:dif} by $(s^1,s^2,s^3,\hdots)$ and add. We obtain a single partial differential equation:
+Multiply the differential equation \eqref{eq:dif:BD} by $(s^1,s^2,s^3,\hdots)$ and add. We obtain a single partial differential equation:
  \begin{subequations}
   \begin{numcases}{}
     		G(s,0)=s^{r} \\
     		G(1,t)=1 \\
     		G(0,t)=0 \\
-    		\dfrac{\partial G(s,t)}{\partial t} = (\lambda s -\mu)(s-1) \dfrac{\partial G(s,t)}{\partial s} \text{ for } s \in [0,1] \label{eq:dif:partial:birthdeath}
+    		\dfrac{\partial G(s,t)}{\partial t} = (\lambda s -\mu)(s-1) \dfrac{\partial G(s,t)}{\partial s} \text{ for } s \in [0,1] \label{eq:dif:BD:partial}
  \end{numcases}
  \end{subequations}
  with $\displaystyle G(s,t)=\sum_{i=1}^{\infty} P_i(t)s^i=\mathbb{E}[ s^{N(t)}] $ the probability generating function of $N(t)$. \\
@@ -343,13 +343,15 @@ At equilibrium, with $\rho = \sfrac{\lambda}{c} $, the probability generating fu
   \end{numcases}
  \end{subequations}
  
- where $\psi \equiv \psi(t_{max})={\mathbb E}_{N_1(t_{max}), \hdots, N_V(t_{max}) } \left[ \displaystyle  \sum_{i=1}^V \dfrac{ N_i(t_{max})(N_i(t_{max})-1)}{ N_+(t_{max})( N_+(t_{max}) -1 )} \right]$.
+ \begin{equation}
+ \text{where }\psi \equiv \psi(t_{max})={\mathbb E}_{N_1(t_{max}), \hdots, N_V(t_{max}) } \left[ \displaystyle  \sum_{i=1}^V \dfrac{ N_i(t_{max})(N_i(t_{max})-1)}{ N_+(t_{max})( N_+(t_{max}) -1 )} \right].. \label{psi}
+ \end{equation}
   
 \subsection{Derivation of relatedness for infinite number of insects.}
 Under the assumption of an infinite number of demes ($n_{I} \rightarrow \infty$), both $Q_1^J$ and $Q_1(t)$ equal $0$. Thus the recursion equation at equilibrium for $Q_0(t_{max})$ is solve unambiguously and give the relatedness $R$:
 
 \begin{equation}
-R=Q_0(t_{max}) = \psi.
+R \simeq Q_0(t_{max}) \simeq \psi. \label{R=psi}
 \end{equation}
 
 
@@ -385,8 +387,138 @@ Taking mutation rate $u$ into account, the recursion equations become:
  
 And thus by taking the limit for low mutation rate ($u \rightarrow 0$), the relatedness becomes:
  \begin{equation}
- R=\lim_{u \to 0} R(u)=\dfrac{n_{I} \psi}{n_{I} + \psi}=\dfrac{\psi}{1+ \dfrac{\psi}{n_{I}}}.
+ R \simeq \lim_{u \to 0} R(u)=\dfrac{n_{I} \psi}{n_{I} + \psi}=\dfrac{\psi}{1+ \dfrac{\psi}{n_{I}}}. \label{R=psi(nI)}
  \end{equation}
  
+ \section{Deterministic arrival time of nematodes.}
  
+ \paragraph{Notation} $ $\\
+ $\bullet \quad V$ the number of nematodes infecting the insect\\
+ $\bullet \quad \tau$ the rate of arrival of nematodes in the insect\\
+ $\bullet \quad \lambda$ the birth rate of bacteria in the insect\\
+ $\bullet \quad r_i$ $( 1 \leq i \leq V )$ the number of bacteria from the $i$th nematode at the time of infection by the last nematode\\
+ $\bullet \quad r$ the number of bacteria carried by a nematode \\
+ $\bullet \quad q=e^{\sfrac{ \lambda}{\tau}}$
+ 
+
+ Assume $r_i \gg 1$, $ 1 \leq i \leq V $, the function $\psi$ defined earlier simplify to 
+ 
+ \begin{align}
+ \psi &={\mathbb E}_{N_1(t_{max}), \hdots, N_V(t_{max}) } \left[ \displaystyle  \sum_{i=1}^V \dfrac{ N_i(t_{max})(N_i(t_{max})-1)}{ N_+(t_{max})( N_+(t_{max}) -1 )} \right] \text{ by } \ref{psi} \\
+ &= \dfrac{ r_+ + \sum_{i=0}^V r_i^2}{\sum_{i=0}^V r_i \left(\sum_{i=0}^V r_i +1\right) }  -2 e^{-\lambda t_{max}} \dfrac{ \left(\sum_{i=0}^V r_i\right)^2-\sum_{i=0}^V r_i^2}{\sum_{i=0}^V r_i \left( \left(\sum_{i=0}^V r_i\right)^2 -1\right) } \text{ by }\ref{PI} \\
+ & \simeq \dfrac{ \sum_{i=0}^V r_i^2}{\left(\sum_{i=0}^V r_i\right)^2}, \label{simplify:relatedness}
+ \end{align}
+ which is independent of both $\lambda$ and $t_{max}$.
+ 
+ 
+ Let us assume that the arrival time of nematodes are deterministic, assume also that the growth of bacteria prior to the infection by the last nematode is deterministic. The initial number $r_i$ of bacteria from $i$th last arrived nematode are of the form $r_i=r e^{\lambda \sfrac{ (i-1) }{\tau}}=r (e^{\sfrac{ \lambda}{\tau}})^{i-1}=r q^{i-1}$, for $ 1 \leq i \leq V$.
+ $\psi$ is then approximated by: 
+ 
+ \begin{align}
+  \psi &\simeq \dfrac{ \sum_{i=0}^V r^2 (q^2)^{i-1}}{\left(\sum_{i=0}^V r q^{i-1}\right)^2} = \dfrac{ \sum_{i=0}^V (q^2)^{i-1}}{\left(\sum_{i=0}^V q^{i-1}\right)^2}= \dfrac{q^{2V} -1 }{q^{2} -1 } \dfrac{(q-1)^2}{(q^V -1)^2} \\
+  &= \dfrac{(q-1)(q^V +1)}{(q+1)(q^V -1)} = \dfrac{(e^{\sfrac{ \lambda}{\tau}}-1)((e^{\sfrac{ \lambda}{\tau}})^V +1)}{(e^{\sfrac{ \lambda}{\tau}}+1)((e^{\sfrac{ \lambda}{\tau}})^V -1)}.
+ \end{align}
+ Under the model of infinite number of insects, the relatedness is 
+ 
+ \begin{equation}
+ R \simeq \psi \simeq  \dfrac{(q-1)(q^V +1)}{(q+1)(q^V -1)} \text{ by }\ref{R=psi}.
+ \end{equation}
+ It is worth noticing that the relatedness does not depend on the number of bacteria initially brought by the nematode ($r$), nor on the the total population size when the bacteria stop growing exponentially. 
+ This formula is valid only if the population of bacteria is growing exponentially at the time the last nematode infected the insect.
+ 
+ $\bullet$ If the birth rate of bacteria is far superior than the infection rate we have:
+ \begin{equation}
+ \tau \ll \lambda \Rightarrow q \gg 1 \Rightarrow R \simeq 1,
+ \end{equation}
+ The relatedness is close to one, all bacteria are from the same nematode.
+ 
+ 
+ $\bullet$ If the birth rate of bacteria is far inferior to the infection rate we have:
+ \begin{equation}
+ \tau \gg \lambda \Rightarrow q \simeq 1 + \frac{\lambda }{\tau } \Rightarrow R \simeq 
+  \dfrac{\dfrac{\lambda}{\tau}\left( \dfrac{V\lambda}{\tau} +2\right)}{\left( \dfrac{\lambda}{\tau} +2\right)\dfrac{V\lambda}{\tau}} \simeq \dfrac{1}{V}.
+ \end{equation}
+  The relatedness is close to $V^{-1}$, as if all nematodes were infected simultaneously.
+  
+  This raises the question : The cooperation evolves only for a certain quantity of nematodes infecting the insect and for a certain ratio of arrival rate/ growth rate.
+
+Under the model of finite number of insects, the relatedness is then approximated by: 
+ 
+ \begin{align}
+  R & \simeq \dfrac{\psi}{1+ \dfrac{\psi}{n_{I}}} \simeq \dfrac{(q-1)(q^V +1)}{(q+1)(q^V -1)} \left( 1+ \dfrac{(q-1)(q^V +1)}{n_I (q+1)(q^V -1)} \right)^{-1} \text{ by }\ref{R=psi(nI)}\\
+    &= \dfrac{(q-1)(q^V+1)}{ (q+1)(q^V -1)+ \dfrac{(q-1)(q^V +1)}{n_I}}.
+ \end{align}
+ 
+ 
+ $\bullet$ If the birth rate of bacteria is far superior than the infection rate we have:
+ \begin{equation}
+ \tau \ll \lambda \Rightarrow q \gg 1 \Rightarrow R \simeq \dfrac{1}{1+n_I},
+ \end{equation}
+ 
+ $\bullet$ If the birth rate of bacteria is far inferior to the infection rate we have:
+ \begin{equation}
+ \tau \gg \lambda \Rightarrow q \simeq 1 + \frac{\lambda }{\tau } \Rightarrow R \simeq \dfrac{n_I}{n_I V +1}.
+ \end{equation}
+
+ \section{Fitness function and derivation of equilibrium.}
+ 
+ In this section we make use of the previous results for the derivation of evolutionary stable strategies.
+ \subsection{Bacteria feeding the nematode}
+ In this case we are interested in a phenotype of bacteria feeding the nematodes after they finished growing exponentially. We assume the bacteria can choose to sacrifice itself to feed a nematode and thus increase the fitness of this focal nematode.
+ 
+  \paragraph{Notation} $ $\\
+ $\bullet \quad n_I$ the number of insects \\
+ $\bullet \quad R$ the relatedness as previously \\
+ $\bullet \quad z$ the phenotype of bacteria measuring the probability the individual(s) will sacrifice it(them)self to feed a nematode\\
+ $\bullet \quad z_\bullet $ the phenotype $z$ for the focal individual\\
+ $\bullet \quad z_j$ the phenotype $z$ for the individuals in the $j$th deme (the insect)\\
+ $\bullet \quad \mathbf{z}=(z_1,\cdots,z_{n_I})$ the vector of $z_j$\\
+ $\bullet \quad z_0^R$ the average phenotype $z$ for the individuals in the same deme as the focal individual\\
+ $\bullet \quad \bar{z}=\sum_k z_k / (n_I -1) $ the average phenotype $z$ for the individuals in demes different from the focal individual\\
+ $\bullet \quad f (x)=ax+b$, $a>0$ a linear function describing the number of nematodes exiting the insect due to the phenotype (sacrifice) of bacteria.
+ 
+ Let $ w_j(z_\bullet , \mathbf{z} )$ be the fitness for a focal individual in deme $j$, it can be expressed as:
+ \begin{align}
+ w_j(z_\bullet , \mathbf{z} ) &= \dfrac{1-z_\bullet}{1- z_j}\dfrac{n_I f(z_j)}{f(z_j)+\sum_{i \neq j} f(z_i)} \\
+  &= \dfrac{1-z_\bullet}{1- z_j}\dfrac{n_I (a z_j +b) }{(a z_j +b)+\sum_{i \neq j} (a z_i +b)}
+ \end{align}
+ 
+ Since all demes are equivalent, for all demes $k$ different from the focal one, the $z_k$ variables contribute identically to the fitness measure. We write the fitness as a function of $z_\bullet$, $z_0^R$ and $\bar{z}$:
+ 
+  \begin{align}
+ w(z_\bullet ,z_0^R , \bar{z} ) &= \dfrac{1-z_\bullet}{1- z_0^R}\dfrac{n_I (a z_0^R +b) }{(a z_0^R +b)+ b(n_I -1) +a \bar{z} (n_I-1)} \\
+ &= \dfrac{1-z_\bullet}{1- z_0^R}\dfrac{ a z_0^R +b }{a \left( \dfrac{z_0^R}{n_I} +\dfrac{n_I-1}{n_I} \bar{z} \right) +b} \\
+  \end{align}
+  
+  Under the model of infinite number of demes (insects), the fitness reduces to:
+  
+  \begin{equation}
+  w(z_\bullet ,z_0^R , \bar{z} ) \simeq \lim_{n_I \rightarrow \infty} w_j(z_\bullet ,z_0^R , \bar{z} ) = \dfrac{1-z_\bullet}{1- z_0^R}\dfrac{a z_0^R +b }{a \bar{z} +b}
+  \end{equation}
+  
+  We then compute the partial derivative of the fitness with regard to $z_\bullet$ and $z_0^R$ and evaluate them at $z$:
+  
+  \begin{equation}
+  \dfrac{\partial w(z_\bullet ,z_0^R , \bar{z} )}{\partial z_\bullet} = \dfrac{a z_0^R +b }{ (1 - z_0^R) (a \bar{z} +b) } \Rightarrow \left. \dfrac{\partial w(z_\bullet ,z_0^R , \bar{z} )}{\partial z_\bullet} \right\vert_{z_\bullet = z_0^R = \bar{z}=z} = \dfrac{1}{ 1 - z }
+  \end{equation}
+  
+  \begin{equation}
+  \dfrac{\partial w(z_\bullet ,z_0^R , \bar{z} )}{\partial z_0^R} = \dfrac{(1- z_\bullet)(a +b)}{(1- z_0^R)^2(a \bar{z} +b)} \Rightarrow \left. \dfrac{\partial w(z_\bullet ,z_0^R , \bar{z} )}{\partial z_0^R} \right\vert_{z_\bullet = z_0^R = \bar{z}=z} = \dfrac{a +b}{(1- z)(a z +b)}
+  \end{equation}
+  
+  Solving $\left. \dfrac{\partial w}{\partial z_\bullet} \right\vert_{z^*} + \left. \dfrac{\partial w}{\partial z_0^R} \right\vert_{z^*} R =0 $ yields the evolutionary stable phenotype, see F. Rousset (2004) 
+  
+    \begin{equation}
+  \dfrac{1}{ 1 - z^* } + \dfrac{a +b}{(1- z^*)(a z^* +b)}R =0
+  \end{equation}
+  \begin{equation}
+  \iff
+  \end{equation}
+  \begin{equation}
+  z^*=\dfrac{R(a+b)-b}{a}=R(1+c)-c \text{ where }c=\dfrac{b}{a}
+  \end{equation}
+  In the special case $c=0$, the phenotype is the relatedness:
+  \begin{equation}
+  z^*=R
+  \end{equation}
 \end{document}
