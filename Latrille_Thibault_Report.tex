@@ -475,35 +475,57 @@ Under the model of finite number of insects, the relatedness is then approximate
  $\bullet \quad \mathbf{z}=(z_1,\cdots,z_{n_I})$ the vector of $z_j$\\
  $\bullet \quad z_0^R$ the average phenotype $z$ for the individuals in the same deme as the focal individual\\
  $\bullet \quad \bar{z}=\sum_k z_k / (n_I -1) $ the average phenotype $z$ for the individuals in demes different from the focal individual\\
- $\bullet \quad f (x)=ax+b$, $a>0$ a linear function describing the number of nematodes exiting the insect due to the phenotype (sacrifice) of bacteria.
+ $\bullet \quad f (x)=ax+b$, $a>0$ a linear function describing the number of nematodes exiting the insect due to the phenotype (sacrifice) of bacteria.\\
+ $\bullet \quad m=\sum{i=1}^V r q^{i-1}$ the total number of bacteria released in the insect at the moment of the last infection by nematodes.
  
- Let $ w_j(z_\bullet , \mathbf{z} )$ be the fitness for a focal individual in deme $j$, it can be expressed as:
+ We assume the following life cycle, focusing on one particular individual in the $j$th insect:
+ 
+ 
+ $\bullet$ (1) Starting when the last nematode infected the insect, previous result showed that the relatedness is fixed and the exponential growth and final population size has a negligible impact on relatedness
+ 
+ 
+ $\bullet$ (2) $J_B$ bacteria are produced by the focal bacteria, they are in competition with $J_B m$ bacteria in the same insect (including those of the focal individual).
+ 
+ 
+ $\bullet$ (3) After the nematode eat from the bacteria, there is only $J_B(1-z\bullet)$ offspring of the focal individual competing with $J_B m (1-z_j)$ offspring produced in the same insect (including those of the focal individual)
+ 
+ 
+ $\bullet$ (4) $J_N f(z_j)$ nematodes are produced from the $j$th insect, they are in competition with $\sum_{i=1}^{n_I} J_N f(z_i)$ nematodes produced by all insect (including those produced by the insect of the focal individual)
+ 
+ 
+ $\bullet$ (5) Only $V n_I$ nematodes will infect the next generation of insects. Since all nematodes are equivalent, the probability of being the $i$th $(1 \leq i \leq V)$ nematode infecting the insect 
+is uniform, thus with probability $1/V$.If the nematode is the $i$th infecting the insect, the number of bacteria from this nematode at the moment of the last infection by nematodes is $r q^{i-1}$.
+Thus, in expectation, there is $V n_I (\sum_{i=1}^V V^{-1}  r q^{i-1})=n_I m$ offspring of the focal one in the next cycle, conditioning on the carrying nematodes being from the one that succeded their infection in the next cycle. 
+
+
+Putting together all parts of the cycle, we can compute $ w_j(z_\bullet , \mathbf{z} )$, the fitness of a focal individual in deme $j$:
  \begin{align}
- w_j(z_\bullet , \mathbf{z} ) &= \dfrac{1-z_\bullet}{1- z_j}\dfrac{n_I f(z_j)}{f(z_j)+\sum_{i \neq j} f(z_i)} \\
-  &= \dfrac{1-z_\bullet}{1- z_j}\dfrac{n_I (a z_j +b) }{(a z_j +b)+\sum_{i \neq j} (a z_i +b)}
+ w_j(z_\bullet , \mathbf{z} ) &= \dfrac{J_B(1-z_\bullet)}{J_B m (1- z_j)}\dfrac{ J_N f(z_j)}{\sum_{i=1}^{n_I} J_N  f(z_i)} n_I m \\
+ &= \dfrac{1-z_\bullet}{1- z_j}\dfrac{n_I f(z_j)}{\sum_{i=1}^{n_I} f(z_i)} \\
+  &= \dfrac{1-z_\bullet}{1- z_j}\dfrac{n_I (a z_j +b) }{\sum_{i=1}^{n_I} (a z_i +b)}.
  \end{align}
  
  Since all demes are equivalent, for all demes $k$ different from the focal one, the $z_k$ variables contribute identically to the fitness measure. We write the fitness as a function of $z_\bullet$, $z_0^R$ and $\bar{z}$:
  
   \begin{align}
  w(z_\bullet ,z_0^R , \bar{z} ) &= \dfrac{1-z_\bullet}{1- z_0^R}\dfrac{n_I (a z_0^R +b) }{(a z_0^R +b)+ b(n_I -1) +a \bar{z} (n_I-1)} \\
- &= \dfrac{1-z_\bullet}{1- z_0^R}\dfrac{ a z_0^R +b }{a \left( \dfrac{z_0^R}{n_I} +\dfrac{n_I-1}{n_I} \bar{z} \right) +b} \\
+ &= \dfrac{1-z_\bullet}{1- z_0^R}\dfrac{ a z_0^R +b }{a \left( \dfrac{z_0^R}{n_I} +\dfrac{n_I-1}{n_I} \bar{z} \right) +b}.
   \end{align}
   
   Under the model of infinite number of demes (insects), the fitness reduces to:
   
   \begin{equation}
-  w(z_\bullet ,z_0^R , \bar{z} ) \simeq \lim_{n_I \rightarrow \infty} w_j(z_\bullet ,z_0^R , \bar{z} ) = \dfrac{1-z_\bullet}{1- z_0^R}\dfrac{a z_0^R +b }{a \bar{z} +b}
+  w(z_\bullet ,z_0^R , \bar{z} ) \simeq \lim_{n_I \rightarrow \infty} w_j(z_\bullet ,z_0^R , \bar{z} ) = \dfrac{1-z_\bullet}{1- z_0^R}\dfrac{a z_0^R +b }{a \bar{z} +b}.
   \end{equation}
   
   We then compute the partial derivative of the fitness with regard to $z_\bullet$ and $z_0^R$ and evaluate them at $z$:
   
   \begin{equation}
-  \dfrac{\partial w(z_\bullet ,z_0^R , \bar{z} )}{\partial z_\bullet} = \dfrac{a z_0^R +b }{ (1 - z_0^R) (a \bar{z} +b) } \Rightarrow \left. \dfrac{\partial w(z_\bullet ,z_0^R , \bar{z} )}{\partial z_\bullet} \right\vert_{z_\bullet = z_0^R = \bar{z}=z} = \dfrac{1}{ 1 - z }
+  \dfrac{\partial w(z_\bullet ,z_0^R , \bar{z} )}{\partial z_\bullet} = \dfrac{a z_0^R +b }{ (1 - z_0^R) (a \bar{z} +b) } \Rightarrow \left. \dfrac{\partial w(z_\bullet ,z_0^R , \bar{z} )}{\partial z_\bullet} \right\vert_{z_\bullet = z_0^R = \bar{z}=z} = \dfrac{1}{ 1 - z }.
   \end{equation}
   
   \begin{equation}
-  \dfrac{\partial w(z_\bullet ,z_0^R , \bar{z} )}{\partial z_0^R} = \dfrac{(1- z_\bullet)(a +b)}{(1- z_0^R)^2(a \bar{z} +b)} \Rightarrow \left. \dfrac{\partial w(z_\bullet ,z_0^R , \bar{z} )}{\partial z_0^R} \right\vert_{z_\bullet = z_0^R = \bar{z}=z} = \dfrac{a +b}{(1- z)(a z +b)}
+  \dfrac{\partial w(z_\bullet ,z_0^R , \bar{z} )}{\partial z_0^R} = \dfrac{(1- z_\bullet)(a +b)}{(1- z_0^R)^2(a \bar{z} +b)} \Rightarrow \left. \dfrac{\partial w(z_\bullet ,z_0^R , \bar{z} )}{\partial z_0^R} \right\vert_{z_\bullet = z_0^R = \bar{z}=z} = \dfrac{a +b}{(1- z)(a z +b)}.
   \end{equation}
   
   Solving $\left. \dfrac{\partial w}{\partial z_\bullet} \right\vert_{z^*} + \left. \dfrac{\partial w}{\partial z_0^R} \right\vert_{z^*} R =0 $ yields the evolutionary stable phenotype, see F. Rousset (2004) 
@@ -515,10 +537,15 @@ Under the model of finite number of insects, the relatedness is then approximate
   \iff
   \end{equation}
   \begin{equation}
-  z^*=\dfrac{R(a+b)-b}{a}=R(1+c)-c \text{ where }c=\dfrac{b}{a}
+  z^*=\dfrac{R(a+b)-b}{a}=R(1+c)-c \text{ where }c=\dfrac{b}{a}.
   \end{equation}
+  
+  
   In the special case $c=0$, the phenotype is the relatedness:
   \begin{equation}
-  z^*=R
+  z^*=R.
   \end{equation}
+  
+  
+  It is worth noticing that if $R<\dfrac{c}{c+1}$, then the evolutionary stable strategy is no cooperation $(z^*=0)$.
 \end{document}
