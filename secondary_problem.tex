@@ -1,0 +1,115 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{cases}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{bigints}
+\usepackage{float}
+\usepackage[margin=60pt]{geometry}
+
+
+\author{Latrille Thibault\\
+\small thibault.latrille@ens-lyon.fr\\[-0.8ex]}
+\title{Relatedness and population dynamic.}  
+
+\newcommand{\ud}{{\mathrm{d}}}
+\newcommand{\pr}{{\mathbb{P}}}
+\newcommand{\nN}{{n_\textrm{H}}}
+\newcommand{\nI}{{n_\textrm{I}}}
+
+\begin{document}
+
+Assume independent $T_i \sim \exp ( \tau)$ for $1 \leq i \leq \nN$. \\ 
+
+The pdf of $T_i$ is $f_{T_i}(t)=\tau e^{-\tau t }$ and the support of this function is $\mathbb{R}_+$. \\
+
+The expectation of $T_i$ is $\mathbb{E}[T_i ]= 1/\tau$ and the variance is $\mathrm{V}(T_i)=1/ \tau^2$.\\
+
+We seek to compute the following expectation: 
+
+\begin{align}
+R &= \mathbb{E} \left[ \dfrac{ \sum_{j=1}^\nN \prod_{i=1}^j e^{2 \lambda T_i } }{ \left( \sum_{j=1}^\nN \prod_{i=1}^j e^{\lambda T_i } \right)^2 } \right] \\
+  &=  \sum_{j=1}^\nN \mathbb{E} \left[ \dfrac{  \prod_{i=1}^j e^{2 \lambda T_i } }{ \left( \sum_{j=1}^\nN \prod_{i=1}^j e^{\lambda T_i } \right)^2 } \right] \\
+  &= \displaystyle \sum_{j=1}^\nN \int_0^\infty \cdots \int_0^\infty  \dfrac{   \prod_{i=1}^j e^{2 \lambda t_i } }{ \left( \sum_{j=1}^\nN \prod_{i=1}^j e^{\lambda t_i } \right)^2 } \prod_{k=1}^\nN f_{T_k}(t_k)  \ud t_1 \cdots \ud t_\nN \\
+   &= \dfrac{\sum_{j=1}^\nN}{ \tau^\nN }\displaystyle \int_0^\infty \cdots \int_0^\infty  \dfrac{  \prod_{i=1}^j e^{2 \lambda t_i } }{ \left( \sum_{j=1}^\nN \prod_{i=1}^j e^{\lambda t_i } \right)^2 } e^{- 1/ \tau \sum_{i=1}^\nN t_i}  \ud t_1 \cdots \ud t_\nN.
+\end{align}
+
+Let us define $Z_i$, for $1 \leq i \leq \nN$ as $Z_i=e^{\lambda T_i}$. We can evaluate the pdf of this random variable as:
+\begin{align}
+\mathbb{P}(Z_i<z) &= \mathbb{P}(e^{\lambda T_i}<z) = \mathbb{P}(T_i< \mathrm{ln}(z)/\lambda ) = 1 - e^{ - \tau \mathrm{ln}(z) / \lambda } = 1 - z^{ - \tau / \lambda }= 1 - z^{ - \rho } \text{ where } \rho=\tau / \lambda.
+\end{align}
+
+The pdf $f_{Z_i}(z)$ of $Z_i$ is:
+\begin{align}
+f_{Z_i}(z) &= \dfrac{ \ud \left( \mathbb{P}(Z_i<z) \right)  }{ \ud z}= \dfrac{ \ud \left( 1 - z^{ - \rho } \right) }{ \ud z} = \rho z^{ -1 - \rho } \text{ for } z \geq 1.
+\end{align}
+
+It is worth noting that the moment of $Z_i$ of order $k$ exists if $\rho>k $:
+\begin{align}
+\mathbb{E}[Z_i^k] &= \int_{z=1}^\infty z^k f_{Z_i}(z) =\rho \int_{z=1}^\infty z^k  z^{k -1 - \rho } =\rho \left[ \dfrac{z^{k - \rho }}{k - \rho}\right]_1^\infty = \dfrac{\rho}{\rho -k }.
+\end{align}
+
+And the expectation $R$ becomes: 
+\begin{align}
+R &=  \sum_{j=1}^\nN \mathbb{E} \left[ \dfrac{  \prod_{i=1}^j Z_i^2 }{ \left( \sum_{j=1}^\nN \prod_{i=1}^j Z_i \right)^2 } \right] \\
+  &= \displaystyle \sum_{j=1}^\nN \int_1^\infty \cdots \int_1^\infty  \dfrac{   \prod_{i=1}^j z_i^2 }{ \left( \sum_{j=1}^\nN \prod_{i=1}^j z_i \right)^2 } \prod_{k=1}^\nN f_{Z_k}(z_k)  \ud z_1 \cdots \ud z_\nN \\
+ &= \displaystyle \sum_{j=1}^\nN \rho^\nN \int_1^\infty \cdots \int_1^\infty  \dfrac{  \prod_{i=1}^j z_i^2 }{ \left( \sum_{j=1}^\nN \prod_{i=1}^j z_i \right)^2 } \left( \prod_{k=1}^\nN z_k \right)^{-1-\rho} \ud z_1 \cdots \ud z_\nN  \\
+  &= \displaystyle \sum_{j=1}^\nN \rho^\nN \int_1^\infty \cdots \int_1^\infty  \dfrac{  \left( \prod_{i=1}^j z_i \right)^{1-\rho} \left( \prod_{i=j+1}^\nN z_i \right)^{-1-\rho} }{ \left( \sum_{j=1}^\nN \prod_{i=1}^j z_i \right)^2 }  \ud z_1 \cdots \ud z_\nN .
+\end{align}
+For $\nN=1$, this expectation is:
+\begin{align}
+R =\displaystyle  \int_1^\infty  \dfrac{z_1^2 }{ z_1^2 }  \rho z_1^{ -1 - \rho } \ud z_1 = 1.
+\end{align}
+For $\nN=2$, this expectation is:
+\begin{align}
+R  &= \displaystyle \sum_{j=1}^2 \rho^2 \int_1^\infty \int_1^\infty  \dfrac{ \left( \prod_{i=1}^j z_i \right)^{1-\rho} \left( \prod_{i=j+1}^2 z_i \right)^{-1-\rho}  }{ \left( \sum_{j=1}^2 \prod_{i=1}^j z_i \right)^2 } \ud z_1 \ud z_2 \\
+ &=\displaystyle  \rho^2  \int_1^\infty \int_1^\infty  \dfrac{   z_1^{1-\rho} z_2^{-1-\rho} +(z_1 z_2 )^{1-\rho} }{ \left( z_1 + z_1 z_2  \right)^2 }  \ud z_1 \ud z_2 \\
+ &=1 + \rho + \rho^2 [\mathrm{PolyGamma}( \rho /2) - \mathrm{PolyGamma}( (1 + \rho)/2)],
+\end{align}
+
+where
+\begin{align}
+\mathrm{PolyGamma} (x) =\Gamma'(x) / \Gamma(x) \text{ and } \Gamma (x) = \int_0^\infty t^{x-1} e^{-t} \ud t .
+\end{align}
+
+which can be proved to be equivalently:
+\begin{align}
+R  = 1+ \rho - 2 \rho^2 \mathrm{B}_{1/2}(\rho,1-\rho).
+\end{align}
+
+where
+\begin{align}
+\mathrm{B}_x(a,b) = \int_0^x t^{a-1}(1-t)^{b-1}\,\mathrm{d}t
+\end{align}
+For $\nN=3$, this expectation is:
+\begin{align}
+R  &= \displaystyle \sum_{j=1}^3 \rho^2 \int_1^\infty \int_1^\infty \int_1^\infty   \dfrac{  \left( \prod_{i=1}^j z_i \right)^{1-\rho} \left( \prod_{i=j+1}^\nN z_i \right)^{-1-\rho} }{ \left( \sum_{j=1}^3 \prod_{i=1}^j z_i \right)^2 } \ud z_1 \ud z_2 \ud z_3 \\
+ &=\displaystyle  \rho^3 \int_1^\infty \int_1^\infty \int_1^\infty  \dfrac{   z_1^{1-\rho} (z_2 z_3)^{-1-\rho} + (z_1 z_2)^{1-\rho} z_3^{-1-\rho} + (z_1 z_2 z_3)^{1-\rho} }{ \left( z_1 + z_1 z_2 +z_1 z_2 z_3 \right)^2 }  \ud z_1 \ud z_2 \ud z_3 .
+\end{align}
+
+Moreover, define the random variable $W_k = \prod_{i=1}^k  Z_i$
+\begin{align}
+\mathbb{P}(W_k<w) &= \mathbb{P}(e^{\lambda \sum_{i=1}^k T_i}<w)= \mathbb{P}( \sum_{i=1}^k T_i< ln(w)/\lambda )= \dfrac{\gamma (k, \rho \mathrm{ln}(w) )}{ (k-1)! },
+\end{align}
+
+where
+\begin{align}
+\gamma (x, y) =  \int_0^y t^{x-1} e^{-t} \ud t.
+\end{align}
+
+And the pdf $f_{W_k}(w)$ of $W_k$ is:
+\begin{align}
+f_{W_k}(w) &= \dfrac{ \ud \left( \mathbb{P}(W_k<w) \right)  }{ \ud w} \\
+ &= \dfrac{ \ud }{ \ud w} \left( \dfrac{\gamma (k, \rho \mathrm{ln}(w) }{ (k-1)! } \right)  \\
+ &= \dfrac{\rho^k}{ (k-1)! } w^{-\rho -1} \mathrm{ln} (w) ^{k-1} \text{ for } w \geq 1.
+\end{align}
+
+
+
+\end{document}
