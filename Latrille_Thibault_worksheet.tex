@@ -258,28 +258,39 @@ Calculus become intractable when there is more than two nematodes arriving in th
 \label{section_life_cycle}
 In this section, we seek to compute the relatedness in a biological model, at critical point of the life cycle of the bacteria.
  \paragraph{Notation} $ $\\
- $\bullet \quad Q_\mathrm{within}$ the probability of identity of two bacteria in the same insect\\
- $\bullet \quad Q_\mathrm{between}$ the probability of identity of two bacteria in different insects\\
- $\bullet \quad Q_\mathrm{within}'$ is $Q_\mathrm{within}$ in the next cycle\\
- $\bullet \quad Q_\mathrm{between}'$ is $Q_\mathrm{between}$ in the next cycle\\
+ $\bullet \quad t \in [0, t_{\mathrm{max}}]$, the time variable along the growth\\
+ $\bullet \quad Q_0^{\mathrm{J}}$ the probability of identity of two bacteria in the same nematode during the free state\\
+ $\bullet \quad Q_1^{\mathrm{J}}$ the probability of identity of two bacteria in different nematodes during the free state\\
+ $\bullet \quad Q_0(t)$ the probability of identity of two bacteria in the same insect during growth\\
+ $\bullet \quad Q_1(t)$ the probability of identity of two bacteria in different insects during growth\\
+ $\bullet \quad Q_0'(t)$ is $Q_0(t)$ in the next cycle\\
+ $\bullet \quad Q_1'(t)$ is $Q_1(t)$ in the next cycle\\
  $\bullet \quad \nI$ the number of insects\\
  $\bullet \quad \nN $ the number of nematodes infecting the insect\\
- $\bullet \quad \psi$ the probability that two bacteria arrived with the the same nematode.
- $\bullet \quad \phi$ the probability that two nematode (colonizers) arrived in the same propagule.
+ $\bullet \quad \psi(t)={\mathbb E} \left[ \displaystyle  \sum_{i=1}^\nN  Z_i (t_{\mathrm{max}}) \right]$ the probability of identity of two bacteria in the same insect.
+ 
   \begin{figure}[H]
 	  \centering
        \includegraphics[width=13.0cm]{Figures/Life_cycle.png}\\
 		\caption{ \textbf{The life cycle.}
 		}
 	\end{figure}
- The recursion equations describing the probabilities of identity are: 
+ The recursion equations describing the probabilities of identity are:
   \begin{subequations}
   \begin{numcases}{}
-      		Q_\mathrm{within}' = \psi + (1 -\psi) [ \phi Q_\mathrm{within} + (1-\phi) Q_\mathrm{between} ] \\
-    		    	Q_\mathrm{between}' = \phi Q_\mathrm{within} + (1-\phi) Q_\mathrm{between},
+      		Q_0^{\mathrm{J}} = 1 \\
+    		Q_1^{\mathrm{J}} = \dfrac{Q_0(t_{\mathrm{max}})}{\nI} +\dfrac{\nI-1}{\nI} Q_1(t_{\mathrm{max}})\\
+    		Q_1'(t) = Q_1^{\mathrm{J}}\\
+    		Q_0'(t) = {\mathbb E} \left[ \displaystyle  \sum_{i=1}^\nN  Z_i (t) \right] + Q_1^{\mathrm{J}} \left( 1 - {\mathbb E}\left[ \displaystyle  \sum_{i=1}^\nN Z_i(t) \right] \right).
   \end{numcases}
  \end{subequations}
- If all 
+ Hence, in a more compact way: 
+  \begin{subequations}
+  \begin{numcases}{}
+      		Q_0'(t_{\mathrm{max}}) = \psi + \left( \dfrac{Q_0(t_{\mathrm{max}})}{\nI}+\dfrac{\nI-1}{\nI} Q_1(t_{\mathrm{max}}) \right) (1 -\psi) \\
+    		    		Q_1'(t_{\mathrm{max}}) = \dfrac{Q_0(t_{\mathrm{max}})}{\nI}+\dfrac{\nI-1}{\nI} Q_1(t_{\mathrm{max}}),
+  \end{numcases}
+ \end{subequations}
   \subsection{Derivation of relatedness for low mutation rate.}
 Taking mutation rate $u$ into account, in a similar fashion to \cite{rousset2004genetic}, the recursion equations become: 
   \begin{subequations}
