@@ -1,0 +1,80 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{cases}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage[margin=60pt]{geometry}
+
+
+\author{Latrille Thibault\\
+\small thibault.latrille@ens-lyon.fr\\[-0.8ex]}
+\title{Relatedness and population dynamic.}  
+
+\newcommand{\ud}{{\mathrm{d}}}
+\renewcommand{\k}{{K}}
+\newcommand{\fm}{{f_\mathrm{M}}}
+\newcommand{\fp}{{f_\mathrm{P}}}
+\newcommand{\kpm}{{k_1}}
+\newcommand{\kmp}{{k_{-1}}}
+\newcommand{\mum}{{\mu_\mathrm{M}}}
+\newcommand{\mup}{{\mu_\mathrm{P}}}
+\renewcommand{\a}{{\alpha}}
+
+\begin{document}
+
+\section{Difference in fecundity and mortality}$ $\\
+We assume two populations of bacteria, having both logistic growth with different growth rates and carrying capacities. 
+Individuals from any population can switch to the other population.\\
+$\bullet$ $P(t) $ is the population of $P$ (Pathogenic) bacteria at time $t$\\
+$\bullet$ $M(t) $ is the population of $M$ (Mutualistic) bacteria at time $t$\\
+$\bullet$ $\fp $ is the fecundity rate of $P$ bacteria\\
+$\bullet$ $\fm $ is the fecundity rate of $M$ bacteria. We have $\fm < \fp$\\
+$\bullet$ $\mup $ is the mortality rate of $P$ bacteria\\
+$\bullet$ $\mum $ is the mortality of $M$ bacteria. We have $\mum < \mup$\\
+$\bullet$ $\k $ is the carrying capacity\\
+$\bullet$ $\kpm $ is the switching rate from P to M\\
+$\bullet$ $\kmp $ is the switching rate from M to P\\
+
+ \[
+ \mathlarger{
+ \mathlarger{
+ \mathlarger{
+ \mathlarger{
+ P \xrightleftharpoons[\kmp]{\kpm} M
+ }}}}
+\]
+
+The system of differential equation describing the system is:
+  \begin{subequations}
+  \begin{numcases}{}
+      		\dfrac{ \ud P }{ \ud t} = ( \fp (1-\kpm) P+ \fm \kmp M ) \left( 1 - \dfrac{\a P+ M}{\k} \right) -\mup P\\
+    		\dfrac{ \ud M }{ \ud t} = ( \fm (1-\kmp) M+ \fp \kpm P ) \left( 1 - \dfrac{\a P+ M}{\k} \right) -\mum M \\
+    		P(0)=P_0 \\
+    		M(0)=0.
+  \end{numcases}
+ \end{subequations}
+ 
+ The stable state (equilibrium) can be analytically derived and we a simple formula for the ratio $P$ over $M$ at equilibrium (independent of $\k$ and $\a$):
+ \begin{equation}
+   \dfrac{M_\mathrm{eq}}{P_\mathrm{eq}}=\Theta_2-\Theta_1+\sqrt{(\Theta_2-\Theta_1)^2+\Delta}
+ \end{equation}
+Where 
+\begin{align}
+\Theta_1 =\frac{\fp (1-\kpm)}{2 \fm \kmp } \\
+\Theta_2 =\frac{\mup (1-\kmp)}{2 \mum \kmp } \\
+\Delta =4\dfrac{ \kpm \fp \mup}{\kmp \fm \mum}
+\end{align}
+also we have:
+ \begin{equation}
+   \dfrac{P_\mathrm{eq}}{M_\mathrm{eq}}=\dfrac{\Theta_1-\Theta_2+\sqrt{(\Theta_2-\Theta_1)^2+\Delta}}{\Delta}
+ \end{equation}
+\end{document}
